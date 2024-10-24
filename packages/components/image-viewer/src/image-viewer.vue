@@ -49,6 +49,9 @@
             <el-icon @click="handleActions('clockwise')">
               <RefreshRight />
             </el-icon>
+            <el-icon @click="handleActions('download')">
+              <Download />
+            </el-icon>
           </div>
         </div>
         <!-- CANVAS -->
@@ -95,6 +98,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Close,
+  Download,
   FullScreen,
   RefreshLeft,
   RefreshRight,
@@ -348,10 +352,22 @@ function handleActions(action: ImageViewerAction, options = {}) {
       transform.value.deg -= rotateDeg
       emit('rotate', transform.value.deg)
       break
+    case 'download':
+      downloadImage(currentImg.value)
+      break
   }
   transform.value.enableTransition = enableTransition
 }
 
+function downloadImage(url: string) {
+  const link = document.createElement('a')
+  link.href = url
+  link.download = url.split('/').pop() || 'image'
+  link.target = '_blank'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 watch(currentImg, () => {
   nextTick(() => {
     const $img = imgRefs.value[0]

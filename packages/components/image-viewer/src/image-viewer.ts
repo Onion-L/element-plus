@@ -13,6 +13,7 @@ export type ImageViewerAction =
   | 'zoomOut'
   | 'clockwise'
   | 'anticlockwise'
+  | 'download'
 
 export const imageViewerProps = buildProps({
   /**
